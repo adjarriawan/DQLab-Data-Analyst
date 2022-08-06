@@ -82,6 +82,13 @@ plt.show()
 # In[5]:
 
 
+import datetime
+import pandas as pd
+
+dataset = pd.read_csv('https://storage.googleapis.com/dqlab-dataset/retail_raw_reduced.csv')
+dataset['order_month'] = dataset['order_date'].apply(lambda x: datetime.datetime.strptime(x, "%Y-%m-%d").strftime('%Y-%m'))
+dataset['gmv'] = dataset['item_price']*dataset['quantity']
+
 # Buat variabel untuk 5 propinsi dengan GMV tertinggi
 top_provinces = (dataset.groupby('province')['gmv']
                         .sum()
